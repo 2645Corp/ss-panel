@@ -115,6 +115,8 @@ $app->group('/admin', function () {
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');
     $this->post('/test/sendmail', 'App\Controllers\Admin\TestController:sendMailPost');
 
+    $this->get('/test/51feeupgrade', 'App\Controllers\Admin\TestController:_51feeupgrade');
+
     $this->get('/sendmail', 'App\Controllers\AdminController:sendMail');
     $this->post('/sendmail', 'App\Controllers\AdminController:sendMailPost');
 
