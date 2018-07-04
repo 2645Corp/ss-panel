@@ -235,7 +235,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="add_method">
                                                 {foreach $ssrmethod as $cipher}
-                                                    <option value="{$cipher}">{$cipher}</option>
+                                                    <option value="{$cipher}" {if $node->add_method==$cipher}selected="selected"{/if}>{$cipher}</option>
                                                 {/foreach}
                                             </select>
                                         </div>
@@ -245,7 +245,7 @@
                                         <label for="add_passwd" class="col-sm-3 control-label">单端口多用户密码</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="add_passwd">
+                                            <input class="form-control" id="add_passwd" value="{$node->add_passwd}">
                                         </div>
                                     </div>
 

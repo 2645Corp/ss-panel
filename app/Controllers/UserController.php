@@ -125,7 +125,7 @@ class UserController extends BaseController
             }
             $jsonr = json_encode($aryr);
             $jsonr_show = json_encode($aryr, JSON_PRETTY_PRINT);
-            $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":". safe_base64_encode($aryr['password'])
+            $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":".safe_base64_encode($aryr['password'])
                 ."/?obfsparam=".safe_base64_encode($aryr['obfs_param'])."&protoparam=".safe_base64_encode($aryr['protocol_param'])."&udpport=1";
             $ssrqr = "ssr://".safe_base64_encode($ssrurl);
         }
@@ -135,6 +135,7 @@ class UserController extends BaseController
                     "port" => 1080,
                     "listen" => "127.0.0.1",
                     "protocol" => "socks",
+                    "domainOverride" => ["tls", "http"],
                     "settings" => [
                         "auth" => "noauth",
                         "udp" => false,
@@ -145,11 +146,15 @@ class UserController extends BaseController
                     "protocol" => "vmess",
                     "settings" => [
                         "vnext" => [
-                            "address" => $node->server,
-                            "port" => $node->v2ray_port,
-                            "users" => [
-                                "id" => $this->user->v2ray_uuid,
-                                "alterId" => $this->user->v2ray_alter_id,
+                            [
+                                "address" => $node->server,
+                                "port" => $node->v2ray_port,
+                                "users" => [
+                                    [
+                                        "id" => $this->user->v2ray_uuid,
+                                        "alterId" => $this->user->v2ray_alter_id,
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -158,7 +163,7 @@ class UserController extends BaseController
                 "outboundDetour" => [
                     [
                         "protocol" => "freedom",
-                        // "settings" => [],
+                        "settings" => null,
                         "tag" => "direct",
                     ],
                 ],
@@ -203,7 +208,7 @@ class UserController extends BaseController
             ];
             $jsonv = json_encode($arr);
             $jsonv_show = json_encode($arr, JSON_PRETTY_PRINT);
-            $ngqr = "vmess://" . base64_encode(json_encode($ng));
+            $ngqr = "vmess://".base64_encode(json_encode($ng));
         }
 
         $user = Auth::getUser();
