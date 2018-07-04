@@ -93,7 +93,7 @@
                         <div class="box-header">
                             <i class="fa fa-code"></i>
 
-                            <h3 class="box-title">SSR 配置地址</h3>
+                            <h3 class="box-title">SSRR 配置地址</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -115,7 +115,7 @@
                         <div class="box-header">
                             <i class="fa fa-qrcode"></i>
 
-                            <h3 class="box-title">SSR 配置二维码</h3>
+                            <h3 class="box-title">SSRR 配置二维码</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

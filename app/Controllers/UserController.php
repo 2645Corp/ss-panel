@@ -13,6 +13,11 @@ use App\Services\DbConfig;
 use App\Utils\Hash;
 use App\Utils\Tools;
 
+function safe_base64_encode($str)
+{
+    return strtr(rtrim(base64_encode($str), '='), '+/=',
+        '-_,');
+}
 
 /**
  *  HomeController
@@ -120,11 +125,9 @@ class UserController extends BaseController
             }
             $jsonr = json_encode($aryr);
             $jsonr_show = json_encode($aryr, JSON_PRETTY_PRINT);
-            $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":".strtr(base64_encode($aryr['password']),
-                    '+/=', '-_,')
-                ."/?obfsparam=".strtr(base64_encode($aryr['obfs_param']), '+/=',
-                    '-_,')."&protoparam=".strtr(base64_encode($aryr['protocol_param']), '+/=', '-_,')."&udpport=1";
-            $ssrqr = "ssr://".strtr(base64_encode($ssrurl), '+/=', '-_,');
+            $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":". safe_base64_encode($aryr['password'])
+                ."/?obfsparam=".safe_base64_encode($aryr['obfs_param'])."&protoparam=".safe_base64_encode($aryr['protocol_param'])."&udpport=1";
+            $ssrqr = "ssr://".safe_base64_encode($ssrurl);
         }
         if ($v2ray) {
             $arr = [
