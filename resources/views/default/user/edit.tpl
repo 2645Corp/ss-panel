@@ -91,7 +91,7 @@
                     <div class="box-header">
                         <i class="fa fa-link"></i>
 
-                        <h3 class="box-title">Shadowsocks连接信息修改</h3>
+                        <h3 class="box-title">连接信息修改</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -121,6 +121,69 @@
                                         </select>  
                                         <div class="input-group-btn">
                                             <button type="submit" id="method-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">协议插件</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="protocol">
+                                            {foreach $protocol as $cipher}
+                                                <option value="{$cipher}" {if $user->protocol==$cipher}selected="selected"{/if} >{$cipher}</option>
+                                            {/foreach}
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="protocol-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">协议参数</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" id="protocol-param" placeholder="输入新协议参数" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="protocol-param-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                    <p class="help-block">
+                                        在 auth_chain_* 协议中表示最多允许同时连接的客户端数。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">混淆插件</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="obfs">
+                                            {foreach $obfs as $cipher}
+                                                <option value="{$cipher}" {if $user->obfs==$cipher}selected="selected"{/if} >{$cipher}</option>
+                                            {/foreach}
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="obfs-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">混淆参数</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" id="obfs-param" placeholder="输入新混淆参数" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="obfs-param-update" class="btn btn-primary">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -213,6 +276,114 @@
                 dataType: "json",
                 data: {
                     method: $("#method").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#protocol-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "protocol",
+                dataType: "json",
+                data: {
+                    protocol: $("#protocol").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#protocol-param-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "protocol-param",
+                dataType: "json",
+                data: {
+                    'protocol-param': $("#protocol-param").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#obfs-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "obfs",
+                dataType: "json",
+                data: {
+                    obfs: $("#obfs").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#obfs-param-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "obfs-param",
+                dataType: "json",
+                data: {
+                    'obfs-param': $("#obfs-param").val()
                 },
                 success: function (data) {
                     if (data.ret) {

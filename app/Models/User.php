@@ -128,6 +128,30 @@ class User extends Model
         $this->save();
     }
 
+    public function updateProtocol($protocol)
+    {
+        $this->protocol = $protocol;
+        $this->save();
+    }
+
+    public function updateProtocolParam($protocol_param)
+    {
+        $this->protocol_param = $protocol_param;
+        $this->save();
+    }
+
+    public function updateObfs($obfs)
+    {
+        $this->obfs = $obfs;
+        $this->save();
+    }
+
+    public function updateObfsParam($obfs_param)
+    {
+        $this->obfs_param = $obfs_param;
+        $this->save();
+    }
+
     public function addInviteCode()
     {
         $uid = $this->attributes['id'];

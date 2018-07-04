@@ -148,6 +148,20 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="custom_rss" class="col-sm-3 control-label">自定义协议</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="custom_rss">
+                                                <option value="0" {if $node->custom_rss==0}selected={/if}>不支持</option>
+                                                <option value="1" {if $node->custom_rss==1}selected={/if}>支持</option>
+                                            </select>
+                                            <p class="help-block">
+                                                单端口多用户模式该项无效。
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="protocol" class="col-sm-3 control-label">协议</label>
 
                                         <div class="col-sm-9">
@@ -165,7 +179,7 @@
                                         <div class="col-sm-9">
                                             <input class="form-control" id="protocol_param" value="{$node->protocol_param}">
                                             <p class="help-block">
-                                                单端口多用户模式该项无效。
+                                                在 auth_chain_* 协议中表示最多允许同时连接的客户端数。
                                             </p>
                                         </div>
                                     </div>
@@ -197,6 +211,20 @@
                                             <input class="form-control" id="ssr_port" value="{$node->ssr_port}">
                                             <p class="help-block">
                                                 设置该项为 0 为多端口多用户模式，填入端口号来启用单端口多用户模式。
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="add_port_only" class="col-sm-3 control-label">仅使用单端口</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="add_port_only">
+                                                <option value="0" {if $node->add_port_only==0}selected={/if}>否</option>
+                                                <option value="1" {if $node->add_port_only==1}selected={/if}>是</option>
+                                            </select>
+                                            <p class="help-block">
+                                                仅使用单端口时仍然显示 ss 配置（多端口）。
                                             </p>
                                         </div>
                                     </div>
@@ -250,6 +278,7 @@
                     server: $("#server").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
+                    custom_rss: $("#custom_rss").val(),
                     rate: $("#rate").val(),
                     info: $("#info").val(),
                     type: $("#type").val(),
@@ -261,6 +290,7 @@
                     obfs: $("#obfs").val(),
                     obfs_param: $("#obfs_param").val(),
                     ssr_port: $("#ssr_port").val(),
+                    add_port_only: $("#add_port_only").val(),
                     add_method: $("#add_method").val(),
                     add_passwd: $("#add_passwd").val()
                 },

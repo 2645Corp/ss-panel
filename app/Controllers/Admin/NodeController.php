@@ -33,6 +33,7 @@ class NodeController extends AdminController
         $node->server = $request->getParam('server');
         $node->method = $request->getParam('method');
         $node->custom_method = $request->getParam('custom_method');
+        $node->custom_rss = $request->getParam('custom_rss');
         $node->traffic_rate = $request->getParam('rate');
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');
@@ -44,6 +45,7 @@ class NodeController extends AdminController
         $node->obfs = $request->getParam('obfs');
         $node->obfs_param = $request->getParam('obfs_param');
         $node->ssr_port = $request->getParam('ssr_port');
+        $node->add_port_only = $request->getParam('add_port_only');
         $node->add_method = $request->getParam('add_method');
         $node->add_passwd = $request->getParam('add_passwd');
         if (!$node->save()) {
@@ -84,6 +86,7 @@ class NodeController extends AdminController
         $node->server = $request->getParam('server');
         $node->method = $request->getParam('method');
         $node->custom_method = $request->getParam('custom_method');
+        $node->custom_rss = $request->getParam('custom_rss');
         $node->traffic_rate = $request->getParam('rate');
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');
@@ -95,6 +98,7 @@ class NodeController extends AdminController
         $node->obfs = $request->getParam('obfs');
         $node->obfs_param = $request->getParam('obfs_param');
         $node->ssr_port = $request->getParam('ssr_port');
+        $node->add_port_only = $request->getParam('add_port_only');
         $node->add_method = $request->getParam('add_method');
         $node->add_passwd = $request->getParam('add_passwd');
         if (!$node->save()) {

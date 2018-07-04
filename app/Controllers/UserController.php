@@ -87,21 +87,30 @@ class UserController extends BaseController
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
 
         $ssr = $node->ssr;
+        $ss = !$node->ssr || $node->add_port_only;
         if($ssr) {
             $aryr['server'] = $node->server;
             $aryr['protocol'] = $node->protocol;
+            $aryr['protocol_param'] = $node->protocol_param;
             $aryr['obfs'] = $node->obfs;
             $aryr['obfs_param'] = $node->obfs_param;
-            if($node->ssr_port == 0) {
-                $aryr['server_port'] = $this->user->port;
-                $aryr['password'] = $this->user->passwd;
-                $aryr['method'] = $this->user->method;
-                $aryr['protocol_param'] = $node->protocol_param;
-            } else {
+            if ($node->custom_rss) {
+                $ary['protocol'] = $this->user->protocol;
+                $aryr['protocol_param'] = $this->user->protocol_param;
+                $aryr['obfs'] = $this->user->obfs;
+                $aryr['obfs_param'] = $this->user->obfs_param;
+            }
+            $aryr['server_port'] = $this->user->port;
+            $aryr['password'] = $this->user->passwd;
+            $aryr['method'] = $this->user->method;
+            if($node->ssr_port != 0) {
                 $aryr['server_port'] = $node->ssr_port;
                 $aryr['password'] = $node->add_passwd;
                 $aryr['method'] = $node->add_method;
+                $aryr['protocol'] = $node->protocol;
                 $aryr['protocol_param'] = strval($this->user->port) . ":" . $this->user->passwd;
+                $aryr['obfs'] = $node->obfs;
+                $aryr['obfs_param'] = $node->obfs_param;
             }
             $jsonr = json_encode($aryr);
             $jsonr_show = json_encode($aryr, JSON_PRETTY_PRINT);
@@ -113,12 +122,12 @@ class UserController extends BaseController
         $user = Auth::getUser();
         if($user->enable) {
             if ($ssr)
-                return $this->view()->assign('ssr', $ssr)
+                return $this->view()->assign('ss', $ss)->assign('ssr', $ssr)
                     ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
                     ->assign('jsonr', $jsonr)->assign('jsonr_show', $jsonr_show)->assign('ssrqr', $ssrqr)
                     ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
             else
-                return $this->view()->assign('ssr', $ssr)
+                return $this->view()->assign('ss', $ss)->assign('ssr', $ssr)
                     ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
                     ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
         }
@@ -135,7 +144,9 @@ class UserController extends BaseController
     public function edit($request, $response, $args)
     {
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('method', $method)->display('user/edit.tpl');
+        $protocol = Node::getProtocolMethod();
+        $obfs = Node::getObfsMethod();
+        return $this->view()->assign('method', $method)->assign('protocol', $protocol)->assign('obfs', $obfs)->display('user/edit.tpl');
     }
 
 
@@ -227,6 +238,44 @@ class UserController extends BaseController
         $method = $request->getParam('method');
         $method = strtolower($method);
         $user->updateMethod($method);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateProtocol($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $protocol = $request->getParam('protocol');
+        $protocol = strtolower($protocol);
+        $user->updateProtocol($protocol);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateProtocolParam($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $param = $request->getParam('protocol-param');
+        $user->updateProtocolParam($param);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateObfs($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $obfs = $request->getParam('obfs');
+        $obfs = strtolower($obfs);
+        $user->updateObfs($obfs);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateObfsParam($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $param = $request->getParam('obfs-param');
+        $user->updateObfsParam($param);
         $res['ret'] = 1;
         return $this->echoJson($response, $res);
     }

@@ -120,6 +120,57 @@
                                             </select>  
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">自定义协议插件</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <select class="form-control" id="protocol">
+                                                    {foreach $protocol as $cipher}
+                                                        <option value="{$cipher}" {if $user->protocol==$cipher}selected="selected"{/if} >{$cipher}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">自定义协议参数</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" id="protocol_param" placeholder="输入新协议参数" class="form-control">
+                                            </div>
+                                            <p class="help-block">
+                                                在 auth_chain_* 协议中表示最多允许同时连接的客户端数。
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">混淆插件</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <select class="form-control" id="obfs">
+                                                    {foreach $obfs as $cipher}
+                                                        <option value="{$cipher}" {if $user->obfs==$cipher}selected="selected"{/if} >{$cipher}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">混淆参数</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" id="obfs_param" placeholder="输入新混淆参数" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </fieldset>
                             </div>
                             <div class="row">
@@ -225,6 +276,10 @@
                     transfer_enable: $("#transfer_enable").val(),
                     invite_num: $("#invite_num").val(),
                     method: $("#method").val(),
+                    protocol: $("#protocol").val(),
+                    protocol_param: $("#protocol_param").val(),
+                    obfs: $("#obfs").val(),
+                    obfs_param: $("#obfs_param").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
                     ref_by: $("#ref_by").val()

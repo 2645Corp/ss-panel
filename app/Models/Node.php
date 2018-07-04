@@ -91,12 +91,17 @@ class Node extends Model
             "camellia-192-cfb" => "camellia-192-cfb",
             "camellia-256-cfb" => "camellia-256-cfb",
             "bf-cfb" => "bf-cfb",
+            "rc4-md5" => "rc4-md5",
+            "rc4" => "rc4",
+            "table" => "table",
+            "none" => "none",
         ];
     }
 
     public static function getSSRMethod()
     {
         return [
+            "none" => "none",
             "table" => "table",
             "rc4" => "rc4",
             "rc4-md5" => "rc4-md5",
@@ -126,7 +131,12 @@ class Node extends Model
             "auth_sha1_v4" => "auth_sha1_v4",
             "auth_aes128_sha1" => "auth_aes128_sha1",
             "auth_aes128_md5" => "auth_aes128_md5",
-            "auth_chain_a" => "auth_chain_a"
+            "auth_chain_a" => "auth_chain_a",
+            "auth_chain_b" => "auth_chain_b",
+            "auth_chain_c" => "auth_chain_c",
+            "auth_chain_d" => "auth_chain_d",
+            "auth_chain_e" => "auth_chain_e",
+            "auth_chain_f" => "auth_chain_f"
         ];
     }
 
