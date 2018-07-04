@@ -66,9 +66,27 @@ class UserController extends AdminController
         $user->protocol_param = $request->getParam('protocol_param');
         $user->obfs = $request->getParam('obfs');
         $user->obfs_param = $request->getParam('obfs_param');
+        $user->v2ray_level = $request->getParam('v2ray_level');
+        $user->v2ray_alter_id = $request->getParam('v2ray_alter_id');
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
         $user->ref_by = $request->getParam('ref_by');
+        if (!$user->save()) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "修改失败";
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $rs['ret'] = 1;
+        $rs['msg'] = "修改成功";
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function updateV2rayUUID($request, $response, $args)
+    {
+        $id = $args['id'];
+        $user = User::find($id);
+
+        $user->v2ray_uuid = Tools::genUUID();
         if (!$user->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

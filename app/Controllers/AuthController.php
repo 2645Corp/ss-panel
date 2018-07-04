@@ -191,6 +191,9 @@ class AuthController extends BaseController
         $user->protocol_param = "10";
         $user->obfs = "tls1.2_ticket_auth";
         $user->obfs_param = "cloudfront.net";
+        $user->v2ray_uuid = Tools::genUUID();
+        $user->v2ray_level = 2;
+        $user->v2ray_alter_id = 64;
         $user->u = 0;
         $user->d = 0;
         $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));

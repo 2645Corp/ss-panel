@@ -24,6 +24,7 @@
                                 <th>加密</th>
                                 <th>描述</th>
                                 <th>SSR</th>
+                                <th>V2Ray</th>
                                 <th>排序</th>
                                 <th>操作</th>
                             </tr>
@@ -34,6 +35,7 @@
                                 <td>{$node->method}</td>
                                 <td>{$node->info}</td>
                                 <td>{$node->ssr}</td>
+                                <td>{$node->v2ray}</td>
                                 <td>{$node->sort}</td>
                                 <td>
                                     <a class="btn btn-info btn-sm" href="/admin/node/{$node->id}/edit">编辑</a>

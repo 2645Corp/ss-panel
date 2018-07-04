@@ -140,7 +140,7 @@
 
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                <input type="text" id="protocol_param" placeholder="输入新协议参数" class="form-control">
+                                                <input type="text" id="protocol_param" value="{$user->protocol_param}" class="form-control">
                                             </div>
                                             <p class="help-block">
                                                 在 auth_chain_* 协议中表示最多允许同时连接的客户端数。
@@ -167,7 +167,40 @@
 
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                <input type="text" id="obfs_param" placeholder="输入新混淆参数" class="form-control">
+                                                <input type="text" id="obfs_param" value="{$user->obfs_param}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">V2Ray UUID</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" id="v2ray-uuid" value="{$user->v2ray_uuid}" class="form-control" disabled>
+                                                <div class="input-group-btn">
+                                                    <button type="submit" id="v2ray-uuid-update" class="btn btn-primary">更换</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">V2Ray Alter ID</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" id="v2ray-alterid" value="{$user->v2ray_alter_id}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">V2Ray Level</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" id="v2ray-level" value="{$user->v2ray_level}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -280,6 +313,8 @@
                     protocol_param: $("#protocol_param").val(),
                     obfs: $("#obfs").val(),
                     obfs_param: $("#obfs_param").val(),
+                    v2ray_level: $("#v2ray-level").val(),
+                    v2ray_alter_id: $("#v2ray-alterid").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
                     ref_by: $("#ref_by").val()
@@ -290,6 +325,30 @@
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
                         window.setTimeout("location.href='/admin/user'", 2000);
+                    } else {
+                        $("#msg-error").hide(10);
+                        $("#msg-error").show(100);
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    $("#msg-error").hide(10);
+                    $("#msg-error").show(100);
+                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                }
+            });
+        }
+        function submit_v2ray_uuid() {
+            $.ajax({
+                type: "PATCH",
+                url: "/admin/user/{$user->id}/v2ray-uuid",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-error").hide(100);
+                        $("#msg-success").show(100);
+                        $("#msg-success-p").html(data.msg);
+                        window.setTimeout("history.go(0)", 1000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
@@ -341,6 +400,9 @@
         });
         $("#submit_prolong").click(function () {
             submit_prolong();
+        });
+        $("#v2ray-uuid-update").click(function () {
+            submit_v2ray_uuid();
         });
         $("#ok-close").click(function () {
             $("#msg-success").hide(100);

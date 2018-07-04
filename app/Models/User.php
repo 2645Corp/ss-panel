@@ -152,6 +152,18 @@ class User extends Model
         $this->save();
     }
 
+    public function updateV2rayUUID()
+    {
+        $this->v2ray_uuid = Tools::genUUID();
+        $this->save();
+    }
+
+    public function updateV2rayAlterID($alter_id)
+    {
+        $this->v2ray_alter_id = $alter_id;
+        $this->save();
+    }
+
     public function addInviteCode()
     {
         $uid = $this->attributes['id'];

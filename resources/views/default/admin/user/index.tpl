@@ -51,6 +51,8 @@
                                 <th>协议参数</th>
                                 <th>混淆插件</th>
                                 <th>混淆参数</th>
+                                <th>V2Ray Level</th>
+                                <th>V2Ray AlterID</th>
                                 <th>已用流量/总流量</th>
                                 <th>最后缴费时间</th>
                                 <th>最后流量重置时间</th>
@@ -75,6 +77,8 @@
                                 <td>{$user->protocol_param}</td>
                                 <td>{$user->obfs}</td>
                                 <td>{$user->obfs_param}</td>
+                                <td>{$user->v2ray_level}</td>
+                                <td>{$user->v2ray_alter_id}</td>
                                 <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
                                 <td>{$user->lastGetGiftTime()}</td>
                                 <td>{$user->lastRestPassTime()}</td>

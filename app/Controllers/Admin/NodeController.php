@@ -19,10 +19,12 @@ class NodeController extends AdminController
         $ssrmethod = Node::getSSRMethod();
         $protocol = Node::getProtocolMethod();
         $obfs = Node::getObfsMethod();
+        $v2rayprotocol = Node::getV2rayProtocol();
         return $this->view()->assign('method', $method)
             ->assign('ssrmethod', $ssrmethod)
             ->assign('protocol', $protocol)
             ->assign('obfs', $obfs)
+            ->assign('v2rayprotocol', $v2rayprotocol)
             ->display('admin/node/create.tpl');
     }
 
@@ -48,6 +50,9 @@ class NodeController extends AdminController
         $node->add_port_only = $request->getParam('add_port_only');
         $node->add_method = $request->getParam('add_method');
         $node->add_passwd = $request->getParam('add_passwd');
+        $node->v2ray = $request->getParam('v2ray');
+        $node->v2ray_port = $request->getParam('v2ray_port');
+        $node->v2ray_protocol = $request->getParam('v2ray_protocol');
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "添加失败";
@@ -69,11 +74,13 @@ class NodeController extends AdminController
         $ssrmethod = Node::getSSRMethod();
         $protocol = Node::getProtocolMethod();
         $obfs = Node::getObfsMethod();
+        $v2rayprotocol = Node::getV2rayProtocol();
         return $this->view()->assign('node', $node)
             ->assign('method', $method)
             ->assign('ssrmethod', $ssrmethod)
             ->assign('protocol', $protocol)
             ->assign('obfs', $obfs)
+            ->assign('v2rayprotocol', $v2rayprotocol)
             ->display('admin/node/edit.tpl');
     }
 
@@ -101,6 +108,9 @@ class NodeController extends AdminController
         $node->add_port_only = $request->getParam('add_port_only');
         $node->add_method = $request->getParam('add_method');
         $node->add_passwd = $request->getParam('add_passwd');
+        $node->v2ray = $request->getParam('v2ray');
+        $node->v2ray_port = $request->getParam('v2ray_port');
+        $node->v2ray_protocol = $request->getParam('v2ray_protocol');
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

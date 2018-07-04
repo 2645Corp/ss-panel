@@ -30,6 +30,7 @@ class UserController extends BaseController
     public function view()
     {
         $userFooter = DbConfig::get('user-footer');
+
         return parent::view()->assign('userFooter', $userFooter);
     }
 
@@ -39,6 +40,7 @@ class UserController extends BaseController
         if ($msg == null) {
             $msg = "在后台修改用户中心公告...";
         }
+
         return $this->view()->assign('msg', $msg)->display('user/index.tpl');
     }
 
@@ -46,6 +48,7 @@ class UserController extends BaseController
     {
         $user = Auth::getUser();
         $payments = Payment::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+
         return $this->view()->assign('payments', $payments)->display('user/payment.tpl');
     }
 
@@ -54,10 +57,12 @@ class UserController extends BaseController
         $msg = DbConfig::get('user-node');
         $user = Auth::getUser();
         $nodes = Node::where('type', 1)->orderBy('sort')->get();
-        if($user->enable)
-            return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg', $msg)->display('user/node.tpl');
-        else
-            return $this->redirect($response,'/user');
+        if ($user->enable) {
+            return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg',
+                $msg)->display('user/node.tpl');
+        } else {
+            return $this->redirect($response, '/user');
+        }
     }
 
 
@@ -78,17 +83,18 @@ class UserController extends BaseController
         }
         $json = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
-        $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
-        $ssqr = "ss://" . base64_encode($ssurl);
+        $ssurl = $ary['method'].":".$ary['password']."@".$ary['server'].":".$ary['server_port'];
+        $ssqr = "ss://".base64_encode($ssurl);
 
-        $surge_base = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
+        $surge_base = Config::get('baseUrl')."/downloads/ProxyBase.conf";
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
-        $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
+        $surge_proxy .= "Proxy = custom,".$ary['server'].",".$ary['server_port'].",".$ary['method'].",".$ary['password'].",".Config::get('baseUrl')."/downloads/SSEncrypt.module";
 
         $ssr = $node->ssr;
         $ss = !$node->ssr || $node->add_port_only;
-        if($ssr) {
+        $v2ray = $node->v2ray;
+        if ($ssr) {
             $aryr['server'] = $node->server;
             $aryr['protocol'] = $node->protocol;
             $aryr['protocol_param'] = $node->protocol_param;
@@ -103,37 +109,116 @@ class UserController extends BaseController
             $aryr['server_port'] = $this->user->port;
             $aryr['password'] = $this->user->passwd;
             $aryr['method'] = $this->user->method;
-            if($node->ssr_port != 0) {
+            if ($node->ssr_port != 0) {
                 $aryr['server_port'] = $node->ssr_port;
                 $aryr['password'] = $node->add_passwd;
                 $aryr['method'] = $node->add_method;
                 $aryr['protocol'] = $node->protocol;
-                $aryr['protocol_param'] = strval($this->user->port) . ":" . $this->user->passwd;
+                $aryr['protocol_param'] = strval($this->user->port).":".$this->user->passwd;
                 $aryr['obfs'] = $node->obfs;
                 $aryr['obfs_param'] = $node->obfs_param;
             }
             $jsonr = json_encode($aryr);
             $jsonr_show = json_encode($aryr, JSON_PRETTY_PRINT);
-            $ssrurl = $aryr['server'] . ":" . $aryr['server_port'] . ":" . $aryr['protocol'] . ":" . $aryr['method'] . ":" . $aryr['obfs'] . ":" . strtr(base64_encode($aryr['password']), '+/=', '-_,')
-                . "/?obfsparam=" . strtr(base64_encode($aryr['obfs_param']), '+/=', '-_,') . "&protoparam=" . strtr(base64_encode($aryr['protocol_param']), '+/=', '-_,') . "&udpport=1";
-            $ssrqr = "ssr://" . strtr(base64_encode($ssrurl), '+/=', '-_,');
+            $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":".strtr(base64_encode($aryr['password']),
+                    '+/=', '-_,')
+                ."/?obfsparam=".strtr(base64_encode($aryr['obfs_param']), '+/=',
+                    '-_,')."&protoparam=".strtr(base64_encode($aryr['protocol_param']), '+/=', '-_,')."&udpport=1";
+            $ssrqr = "ssr://".strtr(base64_encode($ssrurl), '+/=', '-_,');
+        }
+        if ($v2ray) {
+            $arr = [
+                "inbound" => [
+                    "port" => 1080,
+                    "listen" => "127.0.0.1",
+                    "protocol" => "socks",
+                    "settings" => [
+                        "auth" => "noauth",
+                        "udp" => false,
+                        "ip" => "127.0.0.1",
+                    ],
+                ],
+                "outbound" => [
+                    "protocol" => "vmess",
+                    "settings" => [
+                        "vnext" => [
+                            "address" => $node->server,
+                            "port" => $node->v2ray_port,
+                            "users" => [
+                                "id" => $this->user->v2ray_uuid,
+                                "alterId" => $this->user->v2ray_alter_id,
+                            ],
+                        ],
+                    ],
+                ],
+                "inboundDetour" => [],
+                "outboundDetour" => [
+                    [
+                        "protocol" => "freedom",
+                        // "settings" => [],
+                        "tag" => "direct",
+                    ],
+                ],
+                "routing" => [
+                    "strategy" => "rules",
+                    "settings" => [
+                        "rules" => [
+                            [
+                                "type" => "field",
+                                "ip" => [
+                                    "0.0.0.0/8",
+                                    "10.0.0.0/8",
+                                    "100.64.0.0/10",
+                                    "127.0.0.0/8",
+                                    "169.254.0.0/16",
+                                    "172.16.0.0/12",
+                                    "192.0.0.0/24",
+                                    "192.0.2.0/24",
+                                    "192.168.0.0/16",
+                                    "198.18.0.0/15",
+                                    "198.51.100.0/24",
+                                    "203.0.113.0/24",
+                                    "::1/128",
+                                    "fc00::/7",
+                                    "fe80::/10",
+                                ],
+                                "outboundTag" => "direct",
+                            ],
+                        ],
+                    ],
+                ],
+                "network" => $node->v2ray_protocol,
+            ];
+            $ng = [
+                "add" => $node->server,
+                "aid" => $this->user->v2ray_alter_id,
+                "id" => $this->user->v2ray_uuid,
+                "net" => $node->v2ray_protocol,
+                "port" => $node->v2ray_port,
+                "v" => 2,
+                "ps" => $node->name,
+            ];
+            $jsonv = json_encode($arr);
+            $jsonv_show = json_encode($arr, JSON_PRETTY_PRINT);
+            $ngqr = "vmess://" . base64_encode(json_encode($ng));
         }
 
         $user = Auth::getUser();
-        if($user->enable) {
-            if ($ssr)
-                return $this->view()->assign('ss', $ss)->assign('ssr', $ssr)
-                    ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
-                    ->assign('jsonr', $jsonr)->assign('jsonr_show', $jsonr_show)->assign('ssrqr', $ssrqr)
-                    ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
-            else
-                return $this->view()->assign('ss', $ss)->assign('ssr', $ssr)
-                    ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
-                    ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
-        }
+        if ($user->enable) {
+            $temp = $this->view()->assign('ss', $ss)->assign('ssr', $ssr)->assign('v2ray', $v2ray)
+                ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
+                ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy);
+            if ($ssr) {
+                $temp = $temp->assign('jsonr', $jsonr)->assign('jsonr_show', $jsonr_show)->assign('ssrqr', $ssrqr);
+            }
+            if ($v2ray) {
+                $temp = $temp->assign('jsonv', $jsonv)->assign('jsonv_show', $jsonv_show)->assign('ngqr', $ngqr);
+            }
 
-        else
-            return $this->redirect($response,'/user');
+            return $temp->display('user/nodeinfo.tpl');
+        } else {
+            return $this->redirect($response, '/user');
+        }
     }
 
     public function profile($request, $response, $args)
@@ -146,7 +231,9 @@ class UserController extends BaseController
         $method = Node::getCustomerMethod();
         $protocol = Node::getProtocolMethod();
         $obfs = Node::getObfsMethod();
-        return $this->view()->assign('method', $method)->assign('protocol', $protocol)->assign('obfs', $obfs)->display('user/edit.tpl');
+
+        return $this->view()->assign('method', $method)->assign('protocol', $protocol)->assign('obfs',
+            $obfs)->display('user/edit.tpl');
     }
 
 
@@ -154,6 +241,7 @@ class UserController extends BaseController
     {
         $codes = $this->user->inviteCodes();
         $refBys = $this->user->refByUsers();
+
         return $this->view()->assign('codes', $codes)
             ->assign('refBys', $refBys)
             ->display('user/invite.tpl');
@@ -164,6 +252,7 @@ class UserController extends BaseController
         $n = $request->getParam('num');
         if ($n < 1 || $n > $this->user->invite_num) {
             $res['ret'] = 0;
+
             return $response->getBody()->write(json_encode($res));
         }
         for ($i = 0; $i < $n; $i++) {
@@ -176,6 +265,7 @@ class UserController extends BaseController
         $this->user->invite_num = $this->user->invite_num - $request->getParam('num');
         $this->user->save();
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -193,17 +283,20 @@ class UserController extends BaseController
         if (!Hash::checkPassword($user->pass, $oldpwd)) {
             $res['ret'] = 0;
             $res['msg'] = "旧密码错误";
+
             return $response->getBody()->write(json_encode($res));
         }
         if ($pwd != $repwd) {
             $res['ret'] = 0;
             $res['msg'] = "两次输入不符合";
+
             return $response->getBody()->write(json_encode($res));
         }
 
         if (strlen($pwd) < 8) {
             $res['ret'] = 0;
             $res['msg'] = "密码太短啦";
+
             return $response->getBody()->write(json_encode($res));
         }
         $hashPwd = Hash::passwordHash($pwd);
@@ -212,6 +305,7 @@ class UserController extends BaseController
 
         $res['ret'] = 1;
         $res['msg'] = "ok";
+
         return $this->echoJson($response, $res);
     }
 
@@ -224,11 +318,13 @@ class UserController extends BaseController
         } elseif (strlen($pwd) < 5) {
             $res['ret'] = 0;
             $res['msg'] = "密码要大于4位或者留空生成随机密码";
+
             return $response->getBody()->write(json_encode($res));;
         }
         $user->updateSsPwd($pwd);
         $res['ret'] = 1;
         $res['msg'] = sprintf("新密码为: %s", $pwd);
+
         return $this->echoJson($response, $res);
     }
 
@@ -239,6 +335,7 @@ class UserController extends BaseController
         $method = strtolower($method);
         $user->updateMethod($method);
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -249,6 +346,7 @@ class UserController extends BaseController
         $protocol = strtolower($protocol);
         $user->updateProtocol($protocol);
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -258,6 +356,7 @@ class UserController extends BaseController
         $param = $request->getParam('protocol-param');
         $user->updateProtocolParam($param);
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -268,6 +367,7 @@ class UserController extends BaseController
         $obfs = strtolower($obfs);
         $user->updateObfs($obfs);
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -277,6 +377,26 @@ class UserController extends BaseController
         $param = $request->getParam('obfs-param');
         $user->updateObfsParam($param);
         $res['ret'] = 1;
+
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateV2rayUUID($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $user->updateV2rayUUID();
+        $res['ret'] = 1;
+
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateV2rayAlterID($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $param = $request->getParam('v2ray-alterid');
+        $user->updateV2rayAlterID($param);
+        $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -284,30 +404,30 @@ class UserController extends BaseController
     {
         Auth::logout();
         $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login');
+
         return $newResponse;
     }
 
     public function freeze($request, $response, $args)
     {
-        if($this->user->enable) {
-            if(!$this->user->freeze) {
+        if ($this->user->enable) {
+            if (!$this->user->freeze) {
                 $this->user->enable = false;
                 $this->user->freeze = true;
                 $this->user->last_freeze_time = time();
                 $this->user->save();
                 $res['msg'] = "冻结成功";
                 $res['ret'] = 1;
+
                 return $this->echoJson($response, $res);
-            }
-            else {
+            } else {
                 $res['msg'] = "您已冻结";
                 $res['ret'] = 0;
+
                 return $this->echoJson($response, $res);
             }
-        }
-        elseif ($this->user->freeze)
-        {
-            if(strtotime("+30 day", $this->user->last_freeze_time) < time()) {
+        } elseif ($this->user->freeze) {
+            if (strtotime("+30 day", $this->user->last_freeze_time) < time()) {
                 $this->user->freeze = false;
                 $this->user->expire_time += time() - $this->user->last_freeze_time;
                 $this->user->last_rest_pass_time += time() - $this->user->last_freeze_time;
@@ -315,20 +435,21 @@ class UserController extends BaseController
                 $this->user->save();
                 $res['msg'] = "解冻成功！";
                 $res['ret'] = 1;
+
                 return $this->echoJson($response, $res);
-            }
-            else {
+            } else {
                 $this->user->freeze = false;
                 $this->user->enable = true;
                 $this->user->save();
                 $res['msg'] = "解冻成功";
                 $res['ret'] = 1;
+
                 return $this->echoJson($response, $res);
             }
-        }
-        else {
+        } else {
             $res['msg'] = "您尚未激活";
             $res['ret'] = 0;
+
             return $this->echoJson($response, $res);
         }
     }
@@ -338,6 +459,7 @@ class UserController extends BaseController
         if (!$this->user->isAbleToCheckin()) {
             $res['msg'] = "您似乎已经签到过了...";
             $res['ret'] = 1;
+
             return $response->getBody()->write(json_encode($res));
         }
         $traffic = rand(Config::get('checkinMin'), Config::get('checkinMax'));
@@ -356,6 +478,7 @@ class UserController extends BaseController
         }
         $res['msg'] = sprintf("获得了 %u MB流量.", $traffic);
         $res['ret'] = 1;
+
         return $this->echoJson($response, $res);
     }
 
@@ -369,21 +492,23 @@ class UserController extends BaseController
         $user = Auth::getUser();
         $passwd = $request->getParam('passwd');
         // check passwd
-        $res = array();
+        $res = [];
         if (!Hash::checkPassword($user->pass, $passwd)) {
             $res['ret'] = 0;
             $res['msg'] = " 密码错误";
+
             return $this->echoJson($response, $res);
         }
         Auth::logout();
         $user->delete();
         $char = Tools::genRandomChar(32);
         $code = new InviteCode();
-        $code->code = 'AutoRecy' . $char;
+        $code->code = 'AutoRecy'.$char;
         $code->user_id = 0;
         $code->save();
         $res['ret'] = 1;
         $res['msg'] = "GG!您的帐号已经从我们的系统中删除.";
+
         return $this->echoJson($response, $res);
     }
 
@@ -393,8 +518,10 @@ class UserController extends BaseController
         if (isset($request->getQueryParams()["page"])) {
             $pageNum = $request->getQueryParams()["page"];
         }
-        $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+        $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page',
+            $pageNum);
         $traffic->setPath('/user/trafficlog');
+
         return $this->view()->assign('logs', $traffic)->display('user/trafficlog.tpl');
     }
 }

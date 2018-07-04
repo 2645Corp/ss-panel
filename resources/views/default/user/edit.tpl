@@ -189,6 +189,32 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">V2Ray UUID</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" id="v2ray-uuid" value="{$user->v2ray_uuid}" class="form-control" disabled>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="v2ray-uuid-update" class="btn btn-primary">更换</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">V2Ray Alter ID</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" id="v2ray-alterid" placeholder="输入新 Alter ID" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="v2ray-alterid-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="box-footer"></div>
                     </div>
@@ -389,6 +415,59 @@
                     if (data.ret) {
                         $("#ss-msg-success").show();
                         $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#v2ray-uuid-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "v2ray-uuid",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                        setTimeout(function() { history.go(0) }, 1000);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#v2ray-alterid-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "v2ray-alterid",
+                dataType: "json",
+                data: {
+                    'v2ray-alterid': $("#v2ray-alterid").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                        setTimeout(function() { history.go(0) }, 1000);
                     } else {
                         $("#ss-msg-error").show();
                         $("#ss-msg-error-p").html(data.msg);

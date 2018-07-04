@@ -135,6 +135,10 @@
                             <dd>{$user->obfs}</dd>
                             <dt>混淆参数</dt>
                             <dd>{$user->obfs_param}</dd>
+                            <dt>V2Ray UUID</dt>
+                            <dd>{$user->v2ray_uuid}</dd>
+                            <dt>V2Ray Alter ID</dt>
+                            <dd>{$user->v2ray_alter_id}</dd>
                             <dt>上次使用</dt>
                             <dd>{$user->lastSsTime()}</dd>
                         </dl>

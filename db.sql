@@ -59,6 +59,9 @@ CREATE TABLE `ss_node` (
   `add_port_only` tinyint(1) NOT NULL DEFAULT '0',
   `add_method` varchar(64),
   `add_passwd` varchar(16),
+  `v2ray` tinyint(4) NOT NULL DEFAULT '0',
+  `v2ray_port` int(11) NOT NULL DEFAULT '8100',
+  `v2ray_protocol` varchar(64) NOT NULL DEFAULT 'tcp',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -111,6 +114,9 @@ CREATE TABLE `user` (
   `protocol_param` varchar(128) NULL DEFAULT NULL,
   `obfs` varchar(32) NOT NULL DEFAULT 'plain',
   `obfs_param` varchar(128) NULL DEFAULT NULL,
+  `v2ray_uuid` varchar(36) NULL DEFAULT '',
+  `v2ray_level` int(8) NOT NULL DEFAULT '2',
+  `v2ray_alter_id` int(8) NOT NULL DEFAULT '64',
   `switch` tinyint(4) NOT NULL DEFAULT '1',
   `enable` tinyint(4) NOT NULL DEFAULT '1',
   `freeze` tinyint(4) NOT NULL DEFAULT '0',

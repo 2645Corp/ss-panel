@@ -150,4 +150,13 @@ class Node extends Model
             "tls1.2_ticket_auth" => "tls1.2_ticket_auth"
         ];
     }
+
+    public static function getV2rayProtocol()
+    {
+        return [
+            "TCP" => "tcp",
+            "mKCP" => "kcp",
+            "WebSocket" => "ws",
+        ];
+    }
 }

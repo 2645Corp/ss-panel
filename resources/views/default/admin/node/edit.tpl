@@ -99,9 +99,9 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
                                             {foreach $method as $cipher}
-                                               <option value="{$cipher}" {if $node->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                               <option value="{$cipher}" {if $node->method==$cipher}selected="selected"{/if} >{$cipher}</option>
                                             {/foreach}
-                                            </select>  
+                                            </select>
                                         </div>
                                     </div>
 
@@ -250,6 +250,42 @@
                                     </div>
 
                                 </fieldset>
+                                <fieldset class="col-sm-6">
+                                    <legend>V2Ray 特性</legend>
+                                    <div class="form-group">
+                                        <label for="v2ray" class="col-sm-3 control-label">V2Ray 特性</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="v2ray">
+                                                <option value="0" {if $node->v2ray==0}selected={/if}>不支持</option>
+                                                <option value="1" {if $node->v2ray==1}selected={/if}>支持</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="v2ray_port" class="col-sm-3 control-label">端口</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="v2ray_port" value="{$node->v2ray_port}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="v2ray_protocol" class="col-sm-3 control-label">协议</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="v2ray_protocol">
+                                                {foreach $v2rayprotocol as $protocol_name => $protocol_method}
+                                                    <option value="{$protocol_method}"
+                                                            {if $node->v2ray_protocol==$protocol_method}selected="selected"{/if}>
+                                                        {$protocol_name}
+                                                    </option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                     </div>
@@ -292,7 +328,10 @@
                     ssr_port: $("#ssr_port").val(),
                     add_port_only: $("#add_port_only").val(),
                     add_method: $("#add_method").val(),
-                    add_passwd: $("#add_passwd").val()
+                    add_passwd: $("#add_passwd").val(),
+                    v2ray: $("#v2ray").val(),
+                    v2ray_port: $("#v2ray_port").val(),
+                    v2ray_protocol: $("#v2ray_protocol").val(),
                 },
                 success: function (data) {
                     if (data.ret) {
