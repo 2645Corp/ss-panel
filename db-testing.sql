@@ -66,6 +66,8 @@ CREATE TABLE `ss_node` (
   `status` varchar(128) NOT NULL,
   `offset` int(11) NOT NULL DEFAULT '0',
   `sort` int(3) NOT NULL,
+  `ss` tinyint(4) NOT NULL DEFAULT '0',
+  `ssr` tinyint(4) NOT NULL DEFAULT '0',
   `protocol` varchar(64),
   `protocol_param` varchar(128),
   `obfs` varchar(64),

@@ -60,7 +60,7 @@
                                                             class="pull-right badge bg-maroon">{if $node->custom_rss == 1 && $node->ssr_port == 0} {$user->protocol} {else} {$node->protocol} {/if}</span></a>
                                             </li>
                                             <li><a href="./node/{$node->id}">连接端口: <span
-                                                            class="pull-right badge bg-maroon">{if $node->custom_rss == 1 && $node->ssr_port == 0} {$user->port} {else} {$node->ssr_port} {/if}</span></a>
+                                                            class="pull-right badge bg-maroon">{if $node->custom_rss == 1} {$user->port} {else} {$node->ssr_port} {/if}</span></a>
                                             </li>
                                             {if $node->v2ray}
                                                 <li><a href="./node/{$node->id}">负载: <span

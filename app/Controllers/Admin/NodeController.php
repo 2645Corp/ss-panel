@@ -40,6 +40,7 @@ class NodeController extends AdminController
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');
         $node->status = $request->getParam('status');
+        $node->ss = $request->getParam('ss');
         $node->ssr = $request->getParam('ssr');
         $node->sort = $request->getParam('sort');
         $node->protocol = $request->getParam('protocol');
@@ -98,6 +99,7 @@ class NodeController extends AdminController
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');
         $node->status = $request->getParam('status');
+        $node->ss = $request->getParam('ss');
         $node->ssr = $request->getParam('ssr');
         $node->sort = $request->getParam('sort');
         $node->protocol = $request->getParam('protocol');

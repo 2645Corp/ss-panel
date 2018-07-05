@@ -23,6 +23,7 @@
                                 <th>节点</th>
                                 <th>加密</th>
                                 <th>描述</th>
+                                <th>SS</th>
                                 <th>SSR</th>
                                 <th>V2Ray</th>
                                 <th>排序</th>
@@ -34,6 +35,7 @@
                                 <td> {$node->name}</td>
                                 <td>{$node->method}</td>
                                 <td>{$node->info}</td>
+                                <td>{$node->ss}</td>
                                 <td>{$node->ssr}</td>
                                 <td>{$node->v2ray}</td>
                                 <td>{$node->sort}</td>

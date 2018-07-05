@@ -135,6 +135,18 @@
                                     </div>
                                 </fieldset>
                                 <fieldset class="col-sm-6">
+                                    <legend>SS 特性</legend>
+                                    <div class="form-group">
+                                        <label for="ss" class="col-sm-3 control-label">SS 特性</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="ss">
+                                                <option value="0" {if $node->ss==0}selected={/if}>不支持</option>
+                                                <option value="1" {if $node->ss==1}selected={/if}>支持</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <legend>SSR 特性</legend>
                                     <div class="form-group">
                                         <label for="ssr" class="col-sm-3 control-label">SSR 特性</label>
@@ -223,9 +235,6 @@
                                                 <option value="0" {if $node->add_port_only==0}selected={/if}>否</option>
                                                 <option value="1" {if $node->add_port_only==1}selected={/if}>是</option>
                                             </select>
-                                            <p class="help-block">
-                                                仅使用单端口时仍然显示 ss 配置（多端口）。
-                                            </p>
                                         </div>
                                     </div>
 
@@ -320,6 +329,7 @@
                     type: $("#type").val(),
                     status: $("#status").val(),
                     sort: $("#sort").val(),
+                    ss: $("#ss").val(),
                     ssr: $("#ssr").val(),
                     protocol: $("#protocol").val(),
                     protocol_param: $("#protocol_param").val(),

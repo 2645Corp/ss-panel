@@ -96,8 +96,9 @@ class UserController extends BaseController
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom,".$ary['server'].",".$ary['server_port'].",".$ary['method'].",".$ary['password'].",".Config::get('baseUrl')."/downloads/SSEncrypt.module";
 
-        $ssr = $node->ssr;
-        $ss = !$node->ssr || $node->add_port_only;
+        $ss = $node->ss;
+        $ssr = $node->ssr && !$node->add_port_only;
+        $ssr_add = $node->ssr && $node->ssr_port != 0;
         $v2ray = $node->v2ray;
         if ($ssr) {
             $aryr['server'] = $node->server;
@@ -114,20 +115,26 @@ class UserController extends BaseController
             $aryr['server_port'] = $this->user->port;
             $aryr['password'] = $this->user->passwd;
             $aryr['method'] = $this->user->method;
-            if ($node->ssr_port != 0) {
-                $aryr['server_port'] = $node->ssr_port;
-                $aryr['password'] = $node->add_passwd;
-                $aryr['method'] = $node->add_method;
-                $aryr['protocol'] = $node->protocol;
-                $aryr['protocol_param'] = strval($this->user->port).":".$this->user->passwd;
-                $aryr['obfs'] = $node->obfs;
-                $aryr['obfs_param'] = $node->obfs_param;
-            }
             $jsonr = json_encode($aryr);
             $jsonr_show = json_encode($aryr, JSON_PRETTY_PRINT);
             $ssrurl = $aryr['server'].":".$aryr['server_port'].":".$aryr['protocol'].":".$aryr['method'].":".$aryr['obfs'].":".safe_base64_encode($aryr['password'])
                 ."/?obfsparam=".safe_base64_encode($aryr['obfs_param'])."&protoparam=".safe_base64_encode($aryr['protocol_param'])."&udpport=1";
             $ssrqr = "ssr://".safe_base64_encode($ssrurl);
+        }
+        if ($ssr_add) {
+            $aryrd['server'] = $node->server;
+            $aryrd['server_port'] = $node->ssr_port;
+            $aryrd['password'] = $node->add_passwd;
+            $aryrd['method'] = $node->add_method;
+            $aryrd['protocol'] = $node->protocol;
+            $aryrd['protocol_param'] = strval($this->user->port).":".$this->user->passwd;
+            $aryrd['obfs'] = $node->obfs;
+            $aryrd['obfs_param'] = $node->obfs_param;
+            $jsonrd = json_encode($aryrd);
+            $jsonrd_show = json_encode($aryrd, JSON_PRETTY_PRINT);
+            $ssrdurl = $aryrd['server'].":".$aryrd['server_port'].":".$aryrd['protocol'].":".$aryrd['method'].":".$aryrd['obfs'].":".safe_base64_encode($aryrd['password'])
+                ."/?obfsparam=".safe_base64_encode($aryrd['obfs_param'])."&protoparam=".safe_base64_encode($aryrd['protocol_param'])."&udpport=1";
+            $ssrdqr = "ssr://".safe_base64_encode($ssrdurl);
         }
         if ($v2ray) {
             $arr = [
@@ -158,6 +165,9 @@ class UserController extends BaseController
                             ],
                         ],
                     ],
+                    "streamSettings" => [
+                        "network" => $node->v2ray_protocol
+                    ]
                 ],
                 "inboundDetour" => [],
                 "outboundDetour" => [
@@ -195,7 +205,6 @@ class UserController extends BaseController
                         ],
                     ],
                 ],
-                "network" => $node->v2ray_protocol,
             ];
             $ng = [
                 "add" => $node->server,
@@ -213,11 +222,14 @@ class UserController extends BaseController
 
         $user = Auth::getUser();
         if ($user->enable) {
-            $temp = $this->view()->assign('ss', $ss)->assign('ssr', $ssr)->assign('v2ray', $v2ray)
+            $temp = $this->view()->assign('ss', $ss)->assign('ssr', $ssr)->assign('ssr_add', $ssr_add)->assign('v2ray', $v2ray)
                 ->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)
                 ->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy);
             if ($ssr) {
                 $temp = $temp->assign('jsonr', $jsonr)->assign('jsonr_show', $jsonr_show)->assign('ssrqr', $ssrqr);
+            }
+            if ($ssr_add) {
+                $temp = $temp->assign('jsonrd', $jsonrd)->assign('jsonrd_show', $jsonrd_show)->assign('ssrdqr', $ssrdqr);
             }
             if ($v2ray) {
                 $temp = $temp->assign('jsonv', $jsonv)->assign('jsonv_show', $jsonv_show)->assign('ngqr', $ngqr);

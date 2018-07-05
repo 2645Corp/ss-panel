@@ -24,7 +24,7 @@
                         <div class="box-header">
                             <i class="fa fa-code"></i>
 
-                            <h3 class="box-title">配置Json</h3>
+                            <h3 class="box-title">SS 配置Json</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -37,7 +37,7 @@
                         <div class="box-header">
                             <i class="fa fa-code"></i>
 
-                            <h3 class="box-title">配置地址</h3>
+                            <h3 class="box-title">SS 配置地址</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -58,7 +58,7 @@
                         <div class="box-header">
                             <i class="fa fa-qrcode"></i>
 
-                            <h3 class="box-title">配置二维码</h3>
+                            <h3 class="box-title">SS 配置二维码</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -76,7 +76,7 @@
         {if $ssr}
             <div class="row">
                 <div class="col-md-6">
-                    <div class="box box-solid bg-maroon">
+                    <div class="box box-solid bg-maroon-gradient">
                         <div class="box-header">
                             <i class="fa fa-code"></i>
 
@@ -89,7 +89,7 @@
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
-                    <div class="box box-solid bg-maroon">
+                    <div class="box box-solid bg-maroon-gradient">
                         <div class="box-header">
                             <i class="fa fa-code"></i>
 
@@ -111,7 +111,7 @@
                 <!-- /.col (right) -->
 
                 <div class="col-md-6">
-                    <div class="box box-solid bg-maroon">
+                    <div class="box box-solid bg-maroon-gradient">
                         <div class="box-header">
                             <i class="fa fa-qrcode"></i>
 
@@ -121,6 +121,63 @@
                         <div class="box-body">
                             <div class="text-center">
                                 <div id="ssr-qr"></div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col (right) -->
+            </div>
+        {/if}
+        {if $ssr_add}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid bg-maroon">
+                        <div class="box-header">
+                            <i class="fa fa-code"></i>
+
+                            <h3 class="box-title">SSR 配置Json</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <textarea class="form-control" rows="6">{$jsonrd_show}</textarea>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                    <div class="box box-solid bg-maroon">
+                        <div class="box-header">
+                            <i class="fa fa-code"></i>
+
+                            <h3 class="box-title">SSRR 配置地址</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="input-group">
+                                <input type="text" id="ssrd-qr-text" class="form-control" value="{$ssrdqr}">
+                                <div class="input-group-btn">
+                                    <a class="btn btn-primary btn-flat" href="{$ssrdqr}">></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col (right) -->
+
+                <div class="col-md-6">
+                    <div class="box box-solid bg-maroon">
+                        <div class="box-header">
+                            <i class="fa fa-qrcode"></i>
+
+                            <h3 class="box-title">SSRR 配置二维码</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="text-center">
+                                <div id="ssrd-qr"></div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -253,6 +310,10 @@
           var text_rqrcode = jQuery('#ssr-qr-text').val();
           jQuery('#ssr-qr').qrcode({
             "text": text_rqrcode
+          });
+          var text_rdqrcode = jQuery('#ssrd-qr-text').val();
+          jQuery('#ssrd-qr').qrcode({
+            "text": text_rdqrcode
           });
           var text_ngqrcode = jQuery('#ng-qr-text').val();
           jQuery('#ng-qr').qrcode({
