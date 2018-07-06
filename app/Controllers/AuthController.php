@@ -187,8 +187,8 @@ class AuthController extends BaseController
         $user->freeze = false;
         $user->t = 0;
         $user->method = "aes-128-ctr";
-        $user->protocol = "auth_aes128_md5";
-        $user->protocol_param = "";
+        $user->protocol = "auth_chain_d";
+        $user->protocol_param = "10";
         $user->obfs = "tls1.2_ticket_auth";
         $user->obfs_param = "cloudfront.net";
         $user->v2ray_uuid = Tools::genUUID();
