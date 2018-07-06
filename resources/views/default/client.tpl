@@ -61,7 +61,6 @@
                     <dd><a class="pink-text" href="https://itunes.apple.com/cn/app/potatso-2-%E5%BC%BA%E5%A4%A7%E7%9A%84%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7/id1162704202?mt=8">App Store</a></dd>
                     <dt>Potatso（￥30）</dt>
                     <dd><a class="pink-text" href="https://itunes.apple.com/cn/app/potatso/id1070901416?mt=8">App Store</a></dd>
-                    <dt>Kitsunebi</dt>
                     <dt>Surge（￥328）</dt>
                     <dd><a href="https://itunes.apple.com/cn/app/surge-web-developer-tool-proxy/id1040100637?mt=8">App Store</a></dd>
                 </dl>

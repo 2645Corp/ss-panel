@@ -20,6 +20,14 @@ class Helper
         return false;
     }
 
+    public static function isLocal()
+    {
+        if (Config::get('env') === 'testing' || Config::get('env') === 'local') {
+            return true;
+        }
+        return false;
+    }
+
     public static function getTokenFromReq($request)
     {
         if ($request->hasHeader('Token')) {

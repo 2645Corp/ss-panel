@@ -14,7 +14,7 @@
         {else}
         <div class="row center">
             <a href="/start" id="download-button" class="btn-large waves-effect waves-light orange">服务介绍</a>
-            <a href="/auth/register" id="download-button" class="btn-large waves-effect waves-light orange">立即注册</a>
+            <a href="/code" id="download-button" class="btn-large waves-effect waves-light orange">立即注册</a>
         </div>
         {/if}
         <br><br>

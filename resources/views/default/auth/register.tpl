@@ -45,6 +45,7 @@
         </div>
 
         <div class="form-group has-feedback">
+            <p>没有邀请码？<a href="/code" class="text-center">看看这里</a></p>
             <p>注册即代表同意<a href="/tos">服务条款</a></p>
         </div>
 

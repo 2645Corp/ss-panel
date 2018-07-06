@@ -12,7 +12,7 @@ class reCaptcha
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        if (Helper::isTesting()) {
+        if (Helper::isLocal()) {
             $response = $next($request, $response);
             return $response;
         }
