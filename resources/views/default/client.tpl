@@ -4,6 +4,7 @@
 <div class="container">
     <div class="page-header">
         <h1>客户端下载</h1>
+        <p><span class="purple-text">紫色</span>表示支持 V2Ray 特性，<span class="pink-text">粉色</span>表示支持 SSR 特性。</p>
     </div>
     <div class="col-md-12">
         <div class="box box-success">
@@ -12,12 +13,12 @@
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
-                    <dt>C#版本</dt>
-                    <dd><a href="https://github.com/shadowsocks/shadowsocks-windows/releases">Github下载</a></dd>
-                    <dt>Qt版本（不推荐）</dt>
-                    <dd><a href="https://github.com/shadowsocks/shadowsocks-qt5/releases">Github下载</a></dd>
-                    <dt>.NET框架（用于C#版）</dt>
-                    <dd><a href="https://www.microsoft.com/zh-cn/download/details.aspx?id=17718">直接前往微软官网下载</a></dd>
+                    <dt>Shadowsocks</dt>
+                    <dd><a href="https://github.com/shadowsocks/shadowsocks-windows/releases">C# 版本</a></dd>
+                    <dt>ShadowsocksRR</dt>
+                    <dd><a class="pink-text" href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases">C# 版本</a></dd>
+                    <dt>V2Ray</dt>
+                    <dd><a class="purple-text" href="https://github.com/2dust/v2rayN/releases">V2RayN</a></dd>
                 </dl>
             </div>
         </div>
@@ -29,10 +30,16 @@
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
-                    <dt>Github下载</dt>
-                    <dd><a href="https://github.com/shadowsocks/shadowsocks-android/releases">点此进入</a></dd>
-                    <dt>Play商店</dt>
-                    <dd><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks&hl=zh_CN">点此进入</a></dd>
+                    <dt>Shadowsocks</dt>
+                    <dd><a href="https://github.com/shadowsocks/shadowsocks-android/releases">GitHub 下载</a></dd>
+                    <dd><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks&hl=zh_CN">Play 商店</a></dd>
+                    <dt>ShadowsocksRR</dt>
+                    <dd><a class="pink-text" href="https://github.com/shadowsocksrr/shadowsocksr-android/releases">GitHub 下载</a></dd>
+                    <dt>v2RayNG（推荐）</dt>
+                    <dd><a class="purple-text" href="https://github.com/2dust/v2rayNG/releases">GitHub 下载</a></dd>
+                    <dd><a class="purple-text" href="https://play.google.com/store/apps/details?id=com.v2ray.ang&hl=zh_CN">Play 商店</a></dd>
+                    <dt>BifrostV</dt>
+                    <dd><a class="purple-text" href="https://play.google.com/store/apps/details?id=com.github.dawndiy.bifrostv&hl=zh_CN">Play 商店</a></dd>
                 </dl>
             </div>
         </div>
@@ -44,6 +51,8 @@
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
+                    <dt>Kitsunebi（$4.99）</dt>
+                    <dd><a class="purple-text" href="https://itunes.apple.com/us/app/kitsunebi/id1275446921?mt=8">App Store</a></dd>
                     <dt>Wingy（￥6）</dt>
                     <dd><a href="https://itunes.apple.com/cn/app/wingy-free-proxy-utility-for/id1148026741?mt=8">App Store</a></dd>
                     <dt>Shadowrocket（￥18）</dt>
@@ -52,25 +61,9 @@
                     <dd><a class="pink-text" href="https://itunes.apple.com/cn/app/potatso-2-%E5%BC%BA%E5%A4%A7%E7%9A%84%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7/id1162704202?mt=8">App Store</a></dd>
                     <dt>Potatso（￥30）</dt>
                     <dd><a class="pink-text" href="https://itunes.apple.com/cn/app/potatso/id1070901416?mt=8">App Store</a></dd>
+                    <dt>Kitsunebi</dt>
                     <dt>Surge（￥328）</dt>
                     <dd><a href="https://itunes.apple.com/cn/app/surge-web-developer-tool-proxy/id1040100637?mt=8">App Store</a></dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="box box-info">
-            <div class="box-header">
-                <h4 class="box-title">其它版本客户端</h4>
-            </div>
-            <div class="box-body">
-                <dl class="dl-horizontal">
-                    <dt>SS-Python</dt>
-                    <dd><a href="https://github.com/shadowsocks/shadowsocks/tree/master">Github源码</a></dd>
-                    <dt>SS-Libev</dt>
-                    <dd><a href="https://github.com/shadowsocks/shadowsocks-libev">Github源码</a></dd>
-                    <dt>OpenWrt-SS</dt>
-                    <dd><a href="https://github.com/shadowsocks/openwrt-shadowsocks/releases">Github源码</a>|<a href="https://sourceforge.net/projects/openwrt-dist/files/shadowsocks-libev/">SorceForge下载软件包</a></dd>
                 </dl>
             </div>
         </div>
