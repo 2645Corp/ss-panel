@@ -70,11 +70,39 @@ class UserController extends BaseController
         }
     }
 
-
-    public function nodeInfo($request, $response, $args)
+    public function node6($request, $response, $args)
     {
+        $msg = DbConfig::get('user-node');
+        $user = Auth::getUser();
+        $nodes = Node::where('type', 1)->where('server_ipv6', '<>', '')->orderBy('sort')->get();
+        foreach ($nodes as $node) {
+            $node->name = $node->name . '（IPv6）';
+            $node->server = $node->server_ipv6;
+        }
+        if ($user->enable) {
+            return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg',
+                $msg)->display('user/node.tpl');
+        } else {
+            return $this->redirect($response, '/user');
+        }
+    }
+
+    public function nodeInfo6($request, $response, $args) {
         $id = $args['id'];
         $node = Node::find($id);
+        $node->server = $node->server_ipv6;
+        $node->name = $node->name . '（IPv6）';
+        return $this->renderNodeInfo($response, $node);
+    }
+
+    public function nodeInfo($request, $response, $args) {
+        $id = $args['id'];
+        $node = Node::find($id);
+        return $this->renderNodeInfo($response, $node);
+    }
+
+    public function renderNodeInfo($response, $node)
+    {
 
         if ($node == null) {
 
