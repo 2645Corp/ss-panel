@@ -32,7 +32,7 @@
                             <ul class="products-list product-list-in-box">
                                 <li class="item">
                                     <div class="product-img">
-                                        <img src="../assets/public/img/iconfont-server.png" alt="Server Node">
+                                        <img src="/assets/public/img/iconfont-server.png" alt="Server Node">
                                     </div>
                                     <div class="product-info">
                                         <a href="./node/{$node->id}" class="product-title">{$node->name} <span

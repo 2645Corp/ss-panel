@@ -58,6 +58,7 @@ CREATE TABLE `ss_node` (
   `name` varchar(128) NOT NULL,
   `type` int(3) NOT NULL,
   `server` varchar(128) NOT NULL,
+  `server_ipv6` varchar(128) NOT NULL,
   `method` varchar(64) NOT NULL,
   `custom_method` tinyint(1) NOT NULL DEFAULT '0',
   `custom_rss` tinyint(1) NOT NULL DEFAULT '0',

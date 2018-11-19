@@ -118,6 +118,14 @@
                         </a>
                 </li>
 
+                {if $user->enable }
+                <li>
+                    <a href="/user/node6/node">
+                        <i class="fa fa-sitemap"></i> <span>节点列表（IPv6）</span>
+                    </a>
+                </li>
+                {/if}
+
                 <li>
                     <a href="/client">
                         <i class="fa fa-download"></i> <span>客户端下载</span>

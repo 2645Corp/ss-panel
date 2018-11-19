@@ -94,6 +94,14 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="server_ipv6" class="col-sm-3 control-label">节点地址（IPv6）</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="server_ipv6" value="{$node->server_ipv6}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
 
                                         <div class="col-sm-9">
@@ -340,6 +348,7 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
+                    server_ipv6: $("#server_ipv6").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     custom_rss: $("#custom_rss").val(),

@@ -33,6 +33,7 @@ class NodeController extends AdminController
         $node = new Node();
         $node->name = $request->getParam('name');
         $node->server = $request->getParam('server');
+        $node->server_ipv6 = $request->getParam('server_ipv6');
         $node->method = $request->getParam('method');
         $node->custom_method = $request->getParam('custom_method');
         $node->custom_rss = $request->getParam('custom_rss');
@@ -94,6 +95,7 @@ class NodeController extends AdminController
 
         $node->name = $request->getParam('name');
         $node->server = $request->getParam('server');
+        $node->server_ipv6 = $request->getParam('server_ipv6');
         $node->method = $request->getParam('method');
         $node->custom_method = $request->getParam('custom_method');
         $node->custom_rss = $request->getParam('custom_rss');
