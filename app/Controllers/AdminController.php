@@ -102,6 +102,11 @@ class AdminController extends UserController
         $res['msg'] = "更新成功";
         return $response->getBody()->write(json_encode($res));
     }
+    
+    public function sysinfo($request, $response, $args)
+    {
+        return $this->view()->display('admin/sys.tpl');
+    }
 
     public function cleanNodelog($request, $response, $args)
     {
