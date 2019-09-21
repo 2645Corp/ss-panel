@@ -101,6 +101,16 @@ class UserController extends AdminController
     {
         $id = $args['id'];
         $user = User::find($id);
+
+        // sanity check
+        if ($request->getParam('month_num') == null ||
+            $request->getParam('month_num') == '' ||
+            intval($request->getParam('month_num')) === 0) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "修改失败（参数为空或参数格式错误）";
+            return $response->getBody()->write(json_encode($rs));
+        }
+
         $r = $user->extendPayment($request->getParam('month_num'));
 
         if (!$r) {
