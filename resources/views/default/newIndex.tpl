@@ -1,6 +1,8 @@
-<html>
+<html lang="en">
 <head>
     <title>2645Network</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <style>
         @font-face {
             font-family: "Ubuntu";
@@ -44,6 +46,16 @@
             height: 100%;
             z-index: 20;
             position: relative;
+        }
+        @media screen and (max-width: 350px) {
+            h1 {
+                font-size: 64px !important;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            h1 {
+                margin: 20px 20px !important;
+            }
         }
         h1 {
             font-size: 80px;
@@ -103,6 +115,9 @@
             width: 0;
             transition: width 0.3s;
         }
+        .right {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -112,7 +127,7 @@
     <div class="container">
         <h1>2645 Network</h1>
         <h2>稳定 · 隐私 · 易用</h2>
-        <h2>—— 你不专业不快速的校园网 IPv4 隧道</h2>
+        <h2 class="right">—— 你不专业不快速的校园网 IPv4 隧道</h2>
         <div class="button-box">
             {if $user->isLogin}
                 <a href="/user" class="btn login">
