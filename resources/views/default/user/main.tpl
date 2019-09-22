@@ -126,7 +126,7 @@
                 </li>
                 {/if}
 
-                <li>
+                {*<li>
                     <a href="/client">
                         <i class="fa fa-download"></i> <span>客户端下载</span>
                     </a>
@@ -136,7 +136,7 @@
                     <a href="/ping">
                         <i class="fa fa-rocket"></i> <span>可用性测试</span>
                     </a>
-                </li>
+                </li>*}
 
                 <li>
                     <a href="/user/profile">

@@ -37,13 +37,14 @@ $app->post('/reCaptcha', 'App\Controllers\HomeController:handleReCaptcha');
 
 // Home
 $app->group(null, function () {
-    $this->get('/', 'App\Controllers\HomeController:index');
-    $this->get('/code', 'App\Controllers\HomeController:code');
-    $this->get('/tos', 'App\Controllers\HomeController:tos');
+    $this->get('/', 'App\Controllers\HomeController:newIndex');
+    //$this->get('/', 'App\Controllers\HomeController:index');
+    //$this->get('/code', 'App\Controllers\HomeController:code');
+    //$this->get('/tos', 'App\Controllers\HomeController:tos');
     //$this->get('/scs', 'App\Controllers\HomeController:scs');
-    $this->get('/start', 'App\Controllers\HomeController:start');
-    $this->get('/node', 'App\Controllers\HomeController:node');
-    $this->get('/client', 'App\Controllers\HomeController:client');
+    //$this->get('/start', 'App\Controllers\HomeController:start');
+    //$this->get('/node', 'App\Controllers\HomeController:node');
+    //$this->get('/client', 'App\Controllers\HomeController:client');
     $this->get('/debug', 'App\Controllers\HomeController:debug');
     $this->post('/debug', 'App\Controllers\HomeController:postDebug');
 })->add(new reCaptcha);
@@ -76,8 +77,8 @@ $app->group('/user', function () {
     $this->post('/kill', 'App\Controllers\UserController:handleKill');
     $this->post('/freeze', 'App\Controllers\UserController:freeze');
     $this->get('/payment', 'App\Controllers\UserController:payment');
-    $this->post('/payment/eapay/mo', 'App\Controllers\PaymentController:newMonthTrans');
-    $this->post('/payment/eapay/da', 'App\Controllers\PaymentController:newDataTrans');
+    //$this->post('/payment/eapay/mo', 'App\Controllers\PaymentController:newMonthTrans');
+    //$this->post('/payment/eapay/da', 'App\Controllers\PaymentController:newDataTrans');
     $this->get('/logout', 'App\Controllers\UserController:logout');
 })->add(new Auth());
 

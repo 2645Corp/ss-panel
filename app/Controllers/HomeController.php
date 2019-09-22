@@ -63,6 +63,16 @@ class HomeController extends BaseController
         return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->display('index.tpl');
     }
 
+    public function newIndex()
+    {
+        $bgUrls = [
+            'https://api.ixiaowai.cn/api/api.php',
+            'https://api.w0ai1uo.org/api/dongman/'
+        ];
+        $bgUrl = $bgUrls[random_int(0, count($bgUrls) - 1)];
+        return $this->view()->assign('bgUrl', $bgUrl)->display('newIndex.tpl');
+    }
+
     public function code()
     {
         $msg = DbConfig::get('home-code');
@@ -115,8 +125,8 @@ class HomeController extends BaseController
     public function postDebug(Request $request,Response $response, $args)
     {
         $res = [
-            "body" => $request->getBody(), 
-            "params" => $request->getParams() 
+            "body" => $request->getBody(),
+            "params" => $request->getParams()
         ];
         return $this->echoJson($response, $res);
     }

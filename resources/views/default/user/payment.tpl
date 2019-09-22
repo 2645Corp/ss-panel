@@ -36,11 +36,11 @@
                 <div class="callout callout-warning">
                     <h4>说明</h4>
 
-                    <p>支付遇到问题请联系 Telegram <a href="https://t.me/network2645">@network2645</a> 。</p>
+                    <p>支付关闭，请联系系统管理员。</p>
 
                 </div>
 
-                <!-- general form elements -->
+                {*<!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-rocket"></i>
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*}
 
                 {*<!-- general form elements -->
                 <div class="box box-primary">

@@ -44,10 +44,10 @@
             <span class="glyphicon glyphicon-send form-control-feedback"></span>
         </div>
 
-        <div class="form-group has-feedback">
+        {*<div class="form-group has-feedback">
             <p>没有邀请码？<a href="/code" class="text-center">看看这里</a></p>
             <p>注册即代表同意<a href="/tos">服务条款</a></p>
-        </div>
+        </div>*}
 
         <div class="form-group has-feedback">
             <button type="submit" id="reg" class="btn btn-primary btn-block btn-flat">同意服务条款并提交注册</button>
