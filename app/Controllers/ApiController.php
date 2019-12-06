@@ -112,7 +112,8 @@ class ApiController extends BaseController
             } else if ($user->isAdmin() || $user->expire_time > time()) { // 是管理员，或者没欠费
                 if (strtotime("+30 day", $user->last_rest_pass_time) <= time()) { // 需要重置
                     $user->last_rest_pass_time = time();
-                    $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
+                    // Reset transfer_enable with transfer_plan.
+                    $user->transfer_enable = $user->transfer_plan;
                     $user->d = 0;
                     $user->u = 0;
                 }

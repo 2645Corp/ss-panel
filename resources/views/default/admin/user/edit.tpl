@@ -210,12 +210,25 @@
                                 <fieldset class="col-sm-6">
                                     <legend>流量</legend>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">总流量</label>
+                                        <label class="col-sm-3 control-label">当月总流量</label>
 
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <input class="form-control" id="transfer_enable" type="number"
                                                        value="{$user->enableTrafficInGB()}">
+
+                                                <div class="input-group-addon">GiB</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">月套餐流量</label>
+
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input class="form-control" id="transfer_plan" type="number"
+                                                       value="{$user->trafficPlanInGB()}">
 
                                                 <div class="input-group-addon">GiB</div>
                                             </div>
@@ -307,6 +320,7 @@
                     port: $("#port").val(),
                     passwd: $("#passwd").val(),
                     transfer_enable: $("#transfer_enable").val(),
+                    transfer_plan: $("#transfer_plan").val(),
                     invite_num: $("#invite_num").val(),
                     method: $("#method").val(),
                     protocol: $("#protocol").val(),
