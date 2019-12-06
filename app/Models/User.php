@@ -240,6 +240,12 @@ class User extends Model
         return Tools::flowToGB($transfer_enable);
     }
 
+    public function trafficPlan()
+    {
+        $transfer_plan = $this->attributes['transfer_plan'];
+        return Tools::flowAutoShow($transfer_plan);
+    }
+
     public function trafficPlanInGB()
     {
         $transfer_plan = $this->attributes['transfer_plan'];
