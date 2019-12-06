@@ -128,26 +128,13 @@ class ApiController extends BaseController
     {
         $users = User::all();
         foreach ($users as $user) {
-            if ($user->ref_by > 0 || $user->expire_time > time() || $user->freeze) { // 没欠费或者已冻结，忽略非公共邀请用户
+            if ($user->isAdmin() || $user->expire_time > time() || $user->freeze) { // 没欠费或者已冻结，忽略管理员账户:P
                 continue;
             } else { //欠费
-                $user->enable = false;
                 if (($user->expire_time != 0 && $user->expire_time < strtotime("-90 day", time()))
                     || ($user->expire_time == 0 && strtotime($user->regDate()) < strtotime("-90 day", time()))
                 ) {   //欠费很多时
                     $user->delete();
-                } else if (($user->expire_time != 0 && $user->expire_time < strtotime("-1 day", time()))
-                    || ($user->expire_time == 0 && strtotime($user->regDate()) < strtotime("-1 day", time()))
-                ) {   //欠费多时
-                    if ($user->ref_by != -1) {
-                        $user->ref_by = -1;
-                        $char = Tools::genRandomChar(32);
-                        $code = new InviteCode();
-                        $code->code = 'AutoRecy' . $char;
-                        $code->user_id = 0;
-                        $code->save();
-                        $user->save();
-                    }
                 }
             }
         }
