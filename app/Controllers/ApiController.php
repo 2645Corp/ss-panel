@@ -109,7 +109,7 @@ class ApiController extends BaseController
             if ($user->freeze) {
                 // user is frozen, do nothing
                 continue;
-            } else if ($user->expire_time > time()) { // 没欠费
+            } else if ($user->isAdmin() || $user->expire_time > time()) { // 是管理员，或者没欠费
                 if (strtotime("+30 day", $user->last_rest_pass_time) <= time()) { // 需要重置
                     $user->last_rest_pass_time = time();
                     $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
