@@ -143,7 +143,6 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 DROP TABLE IF EXISTS `user_token`;
 CREATE TABLE `user_token` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
