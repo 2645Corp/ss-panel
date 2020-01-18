@@ -113,6 +113,7 @@ CREATE TABLE `user` (
   `u` bigint(20) NOT NULL,
   `d` bigint(20) NOT NULL,
   `transfer_enable` bigint(20) NOT NULL,
+  `transfer_plan` bigint(20) NOT NULL DEFAULT '107374182400',
   `port` int(11) NOT NULL,
   `protocol` varchar(32) NOT NULL DEFAULT 'origin',
   `protocol_param` varchar(128) NULL DEFAULT NULL,
@@ -141,7 +142,6 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `port` (`port`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 DROP TABLE IF EXISTS `user_token`;

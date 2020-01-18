@@ -196,7 +196,9 @@ class AuthController extends BaseController
         $user->v2ray_alter_id = 64;
         $user->u = 0;
         $user->d = 0;
-        $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
+        $defaultTraffic = Tools::toGB(Config::get('defaultTraffic'));
+        $user->transfer_enable = $defaultTraffic;
+        $user->transfer_plan = $defaultTraffic;
         $user->invite_num = Config::get('inviteNum');
         $user->reg_ip = Http::getClientIP();
         $user->ref_by = $c->user_id;

@@ -107,18 +107,13 @@
                     </a>
                 </li>
 
+                {if $user->enable }
                 <li>
-                    {if $user->enable }
                     <a href="/user/node">
                         <i class="fa fa-sitemap"></i> <span>节点列表</span>
-                        {else}
-                        <a href="/node">
-                            <i class="fa fa-sitemap"></i> <span>节点列表</span>
-                            {/if}
-                        </a>
+                    </a>
                 </li>
 
-                {if $user->enable }
                 <li>
                     <a href="/user/node6/node">
                         <i class="fa fa-sitemap"></i> <span>节点列表（IPv6）</span>

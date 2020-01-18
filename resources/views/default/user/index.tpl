@@ -96,8 +96,10 @@
                             </div>
                         </div>
                         <dl class="dl-horizontal">
-                            <dt>总流量</dt>
+                            <dt>当月总流量</dt>
                             <dd>{$user->enableTraffic()}</dd>
+                            <dt>月套餐流量</dt>
+                            <dd>{$user->trafficPlan()}</dd>
                             <dt>已用流量</dt>
                             <dd>{$user->usedTraffic()}</dd>
                             <dt>剩余流量</dt>

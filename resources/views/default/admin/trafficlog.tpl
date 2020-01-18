@@ -38,8 +38,20 @@
                             {foreach $logs as $log}
                                 <tr>
                                     <td>#{$log->id}</td>
-                                    <td>{$log->user()->user_name}</td>
-                                    <td>{$log->node()->name}</td>
+                                    {if $log->user() === null}
+                                        <td>账号已注销(id={$log->user_id})</td>
+                                    {else}
+                                        <td>
+                                            <a href="/admin/user/{$log->user_id}/edit">{$log->user()->user_name}</a>
+                                        </td>
+                                    {/if}
+                                    {if $log->node() === null}
+                                        <td>节点已失效</td>
+                                    {else}
+                                        <td>
+                                            <a href="/admin/node/{$log->node_id}/edit">{$log->node()->name}</a>
+                                        </td>
+                                    {/if}
                                     <td>{$log->rate}</td>
                                     <td>{$log->totalUsed()}</td>
                                     <td>{$log->traffic}</td>

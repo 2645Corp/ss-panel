@@ -26,6 +26,7 @@ class User extends Model
         "port" => 'int',
         "switch" => 'int',
         "transfer_enable" => 'float',
+        "transfer_plan" => 'float',
         "enable" => 'int',
         "freeze" => 'int',
         'is_admin' => 'boolean',
@@ -237,6 +238,18 @@ class User extends Model
     {
         $transfer_enable = $this->attributes['transfer_enable'];
         return Tools::flowToGB($transfer_enable);
+    }
+
+    public function trafficPlan()
+    {
+        $transfer_plan = $this->attributes['transfer_plan'];
+        return Tools::flowAutoShow($transfer_plan);
+    }
+
+    public function trafficPlanInGB()
+    {
+        $transfer_plan = $this->attributes['transfer_plan'];
+        return Tools::flowToGB($transfer_plan);
     }
 
     public function usedTraffic()
