@@ -135,20 +135,20 @@ class NodeController extends AdminController
         $id = $args['id'];
         $node = Node::find($id);
         if (!$node->delete()) {
-            $rs['ret'] = 0;
+            $rs['ret'] = false;
             $rs['msg'] = "删除失败";
             return $response->getBody()->write(json_encode($rs));
         }
-        $rs['ret'] = 1;
+        $rs['ret'] = true;
         $rs['msg'] = "删除成功";
         return $response->getBody()->write(json_encode($rs));
     }
 
-    public function deleteGet($request, $response, $args)
-    {
-        $id = $args['id'];
-        $node = Node::find($id);
-        $node->delete();
-        return $this->redirect($response, '/admin/node');
-    }
+//    public function deleteGet($request, $response, $args)
+//    {
+//        $id = $args['id'];
+//        $node = Node::find($id);
+//        $node->delete();
+//        return $this->redirect($response, '/admin/node');
+//    }
 }
